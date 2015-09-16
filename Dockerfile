@@ -16,16 +16,8 @@ RUN curl -sSL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz \
         && rm bin/*.bat \
         && rm tomcat.tar.gz*
 
-# Prepare by downloading dependencies
-#WORKDIR /code
-#ADD pom.xml /code/pom.xml
-#RUN mvn -q dependency:resolve
-
-# Adding source, compile and package into a WAR
-#ADD src /code/src
-#RUN mvn -q -DskipTests=true compile war:exploded
-#RUN rm -rf /usr/local/tomcat/webapps/ROOT/*
-#RUN cp -r target/travel-1.0.0/* $CATALINA_HOME/webapps/ROOT/
+# Prepare settings.xml for internal Maven reposiroty
+ONBUILD ADD settings.xml /root/.m2/settings.xml
 
 # Expose port
 EXPOSE 8080
